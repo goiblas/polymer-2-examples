@@ -1,4 +1,5 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../countdown-timer/countdown-timer.html">
 
 <dom-module id="launcher-app">
   <template>
@@ -8,10 +9,11 @@
       }
     </style>
     <h2>Hello [[prop1]]</h2>
+    <countdown-timer time="25"></countdown-timer>
   </template>
 
   <script>
-    class MyApplication extends Polymer.Element {
+    class launcherApp extends Polymer.Element {
       static get is() { return 'launcher-app'; }
       static get properties() {
         return {
@@ -23,6 +25,6 @@
       }
     }
 
-    window.customElements.define(MyApplication.is, MyApplication);
+    window.customElements.define(launcherApp.is, launcherApp);
   </script>
 </dom-module>

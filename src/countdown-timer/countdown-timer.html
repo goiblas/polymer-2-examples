@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="countdown-timer">
+  <template>
+    <style>
+        :host {
+            display: inline-block;
+            background-color: #e0e0e0;
+        }
+        @keyframes blink {
+            50%{
+                opacity: 0;
+            }
+        }
+
+        .blink {
+            animation: blink .5s infinite;
+        }
+        span {
+            display: inline-block;
+            padding: 10px 25px;
+        }
+    </style>
+        <span id="clock">[[clock]]</span>
+  </template>
+
+  <script>
+    class countdownTimer extends Polymer.Element {
+      static get is() { return 'countdown-timer'; }
+      static get properties() {
+        return {
+            time:{
+                type: Number,
+                observer: '_observerTime'
+            },
+            clock: {
+                type: String,
+                computed: '_getClock(time)'
+            }
+        };
+      }
+      ready(){
+          super.ready();
+          this._timer = setInterval(function(){
+              --this.time;
+          }.bind(this), 1000);
+      }
+      _observerTime(time){
+          if(time == 0){
+              clearInterval(this._timer);
+          }
+      }
+      _getClock(time){
+            // convert de time in seconds
+            const date = new Date(time * 1000);
+            let mm = date.getUTCMinutes();
+            let ss = date.getSeconds();
+            
+            if(mm < 10){
+                    mm = "0" + mm 
+            }
+            if(ss < 10){ 
+                ss = "0" + ss 
+            }
+            const timeConverted = mm + " : " + ss;
+            return timeConverted
+      }
+    }
+
+    window.customElements.define(countdownTimer.is, countdownTimer);
+  </script>
+</dom-module>
