@@ -41,15 +41,23 @@
       }
       ready(){
           super.ready();
+          this.clock = this.firs;
           this._timer = setInterval(function(){
               --this.time;
           }.bind(this), 1000);
       }
+
+      detachedCallback(){
+          super.detachedCallback();
+          clearInterval(this._timer);
+      }
+
       _observerTime(time){
           if(time == 0){
               clearInterval(this._timer);
           }
       }
+
       _getClock(time){
             // convert de time in seconds
             const date = new Date(time * 1000);
